@@ -10,15 +10,6 @@ import RootRouter from "./RootRouter";
 function App() {
   return (
     <>
-      <A>
-        <B>
-          <C>
-            <D>
-              <E></E>
-            </D>
-          </C>
-        </B>
-      </A>
       <Header></Header>
       <RootRouter />
       <Footer />{" "}

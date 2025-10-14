@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUserAction } from "../action/auth.action";
+import { loginUserAction, registerUserAction } from "../action/auth.action";
 
 const authState = {
   isAuthenticated: false,
@@ -31,7 +31,16 @@ const authSlice = createSlice({
         // add the token ==> who will bring the token?
         //
       })
-      .addCase(registerUserAction.rejected);
+      .addCase(registerUserAction.rejected)
+      .addCase(loginUserAction.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(loginUserAction.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.token = action.payload.data.token;
+      })
+      .addCase(loginUserAction.rejected);
   }, // all rest calls.
   reducers: {}, //common business logic related to auth no rest calls
 });
