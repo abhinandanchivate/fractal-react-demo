@@ -10,16 +10,31 @@ const API = axios.create({
   },
 }); // it will give u the new instance of axios with some common settings / configurations
 // one time activity.
+// if i am performing 10 rest calls then this interceptor will be executed => 10 times
 API.interceptors.request.use(
   // add the token to header called x-auth-token
   (config) => {
     const NO_AUTH_URLS = ["/auth", "/users"];
     // token should not be added for login and register.
-    if (NO_AUTH_URLS.some((url) => config.url?.toLowerCase().startsWith(url))) {
+    // / /api/auth get method helps to load the user details and it requires the token
+    console.log(config.method);
+    const token = localStorage.getItem("token");
+    console.log(token);
+    if (
+      NO_AUTH_URLS.includes(config.url?.toLowerCase()) &&
+      config.method === "get"
+    ) {
+      console.log("inside the get check condition with get method");
+      config.headers["x-auth-token"] = token;
       return config;
     }
-    const token = localStorage.getItem("token");
+    if (NO_AUTH_URLS.some((url) => config.url?.toLowerCase().startsWith(url))) {
+      console.log("inside the get check condition");
+
+      return config;
+    }
     if (token) {
+      console.log("inside the api.js adding token");
       config.headers["x-auth-token"] = token;
     }
     return config;

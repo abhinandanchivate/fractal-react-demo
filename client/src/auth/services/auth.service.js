@@ -11,6 +11,7 @@ export const loadUser = async () => {
     const response = await API.get("/auth");
     // below return is ur success response
     console.log(response);
+    localStorage.setItem("token", response.data.token);
     return { data: response.data, status: response.status };
   } catch (error) {}
 };

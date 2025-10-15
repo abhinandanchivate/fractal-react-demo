@@ -1,12 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUserAction, registerUserAction } from "../action/auth.action";
+import {
+  loadUserAction,
+  loginUserAction,
+  registerUserAction,
+} from "../action/auth.action";
 
 const authState = {
   isAuthenticated: false,
   user: null,
   loading: false,
   error: null,
-  token: null,
+  token: localStorage.getItem("token"),
 };
 // isAuthenticated: to check if the user is logged in or not
 // user: to store user information
@@ -25,8 +29,8 @@ const authSlice = createSlice({
       .addCase(registerUserAction.fulfilled, (state, action) => {
         state.loading = false;
         state.isAuthenticated = true;
-        state.user = action.payload.data.token;
-
+        state.token = action.payload.data.token;
+        localStorage.setItem("token", action.payload.data.token);
         // action : return ==> registerUserAction`
         // add the token ==> who will bring the token?
         //
@@ -39,8 +43,19 @@ const authSlice = createSlice({
         state.loading = false;
         state.isAuthenticated = true;
         state.token = action.payload.data.token;
+        localStorage.setItem("token", action.payload.data.token);
       })
-      .addCase(loginUserAction.rejected);
+      .addCase(loginUserAction.rejected)
+      .addCase(loadUserAction.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(loadUserAction.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        console.log(action.payload.data);
+        state.user = action.payload.data; // user details
+      })
+      .addCase(loadUserAction.rejected);
   }, // all rest calls.
   reducers: {}, //common business logic related to auth no rest calls
 });
