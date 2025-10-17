@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { registerUserAction } from "../redux/action/auth.action";
 const initialState = {
   name: "",
@@ -8,6 +9,7 @@ const initialState = {
   password2: "",
 };
 const Register = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch(); // to call the action
   const [formData, setFormData] = useState(initialState);
 
@@ -19,7 +21,8 @@ const Register = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    dispatch(registerUserAction(formData));
+    dispatch(registerUserAction(formData)).unwrap();
+    navigate("/dashboard");
   };
   const { name, email, password, password2 } = formData;
   return (

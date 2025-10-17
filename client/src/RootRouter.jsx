@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Landing from "./core/components/layout/Landing";
 import AuthRouter from "./auth/router/AuthRouter";
+import DashboardRouter from "./dashboard/router/DashboardRouter";
 
 const RootRouter = () => {
   return (
@@ -10,6 +11,10 @@ const RootRouter = () => {
         <Route path="/" element={<Landing />}></Route>
         {/** Rootrouter : its going to manage all ur module level routers ==> app==> rootrouter==> specific router.==> sp router==> will render the componnet. */}
         <Route path="/auth/*" element={<AuthRouter></AuthRouter>}></Route>
+        <Route
+          path="/dashboard/*"
+          element={<DashboardRouter></DashboardRouter>}
+        ></Route>
       </Routes>
     </>
   );
