@@ -21,7 +21,7 @@ export const loginUserAction = createAsyncThunk(
     try {
       const data = await loginUser(userData);
 
-      dispatch(loadUserAction()); // to load the user details after login
+      dispatch(loadUserAction()).unwrap(); // to load the user details after login
       return data; // payload internally.
     } catch (error) {}
   }

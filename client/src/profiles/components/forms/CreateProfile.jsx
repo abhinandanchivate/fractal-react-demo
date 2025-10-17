@@ -25,6 +25,9 @@ const CreateProfile = () => {
   // create-profile ==> true ==> we will divide the form // 1. createprofile 2. editprofile
 
   const [formState, setFormState] = useState(emptyForm);
+  // to hold the state for show/ hide social inputs
+  // will declare a state
+  const [displaySocialInputs, toggleSocialInputs] = useState(false);
   const navigate = useNavigate();
   const profileSelector = useSelector((state) => state.profile);
 
@@ -51,6 +54,7 @@ const CreateProfile = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log(formState);
   };
 
   const showSocialInputs = (
@@ -180,12 +184,18 @@ const CreateProfile = () => {
             <small class="form-text">Tell us a little about yourself</small>
           </div>
           <div class="my-2">
-            <button type="button" class="btn btn-light">
-              Add Social Network Links
+            <button
+              type="button"
+              class="btn btn-light"
+              onClick={() => toggleSocialInputs(!displaySocialInputs)}
+            >
+              {displaySocialInputs
+                ? "Hide social details "
+                : "Add Social Network Links"}
             </button>
             <span>Optional</span>
           </div>
-
+          {displaySocialInputs && showSocialInputs}
           <input type="submit" class="btn btn-primary my-1" />
           <a class="btn btn-light my-1" href="dashboard.html">
             Go Back
