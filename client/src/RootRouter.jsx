@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Landing from "./core/components/layout/Landing";
 import AuthRouter from "./auth/router/AuthRouter";
 import DashboardRouter from "./dashboard/router/DashboardRouter";
+import ProfileRouter from "./profiles/router/ProfileRouter";
 
 const RootRouter = () => {
   return (
@@ -14,6 +15,10 @@ const RootRouter = () => {
         <Route
           path="/dashboard/*"
           element={<DashboardRouter></DashboardRouter>}
+        ></Route>
+        <Route
+          path="/profile/*"
+          element={<ProfileRouter></ProfileRouter>}
         ></Route>
       </Routes>
     </>

@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e" pages="14">
     <diagram name="Page-1" id="zz2CMkQjYr381hOcUtvI">
-        <mxGraphModel dx="405" dy="237" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="396" dy="349" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -1322,36 +1322,48 @@
         </mxGraphModel>
     </diagram>
     <diagram id="Pc4JWO7vV_7oZ5UK-Mmv" name="Page-15">
-        <mxGraphModel dx="1272" dy="343" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1246" dy="349" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="0guqLEK5pJuzIWrMp1cx-3" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="0guqLEK5pJuzIWrMp1cx-1" target="0guqLEK5pJuzIWrMp1cx-2">
+                <mxCell id="0guqLEK5pJuzIWrMp1cx-3" value="" style="edgeStyle=none;html=1;" parent="1" source="0guqLEK5pJuzIWrMp1cx-1" target="0guqLEK5pJuzIWrMp1cx-2" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="0guqLEK5pJuzIWrMp1cx-1" value="Login/ Register" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="0guqLEK5pJuzIWrMp1cx-1" value="Login/ Register" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="100" y="50" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="0guqLEK5pJuzIWrMp1cx-6" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="0guqLEK5pJuzIWrMp1cx-2" target="0guqLEK5pJuzIWrMp1cx-5">
+                <mxCell id="0guqLEK5pJuzIWrMp1cx-6" value="" style="edgeStyle=none;html=1;" parent="1" source="0guqLEK5pJuzIWrMp1cx-2" target="0guqLEK5pJuzIWrMp1cx-5" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="0guqLEK5pJuzIWrMp1cx-2" value="Dashboard" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                <mxCell id="0guqLEK5pJuzIWrMp1cx-2" value="Dashboard" style="whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="300" y="50" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="0guqLEK5pJuzIWrMp1cx-4" value="Req : 1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="0guqLEK5pJuzIWrMp1cx-4" value="Req : 1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="230" y="40" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="0guqLEK5pJuzIWrMp1cx-5" value="we should render create profile button / edit button , add exp add edu and pritn the exp and edu details over the dashboard." style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                <mxCell id="0guqLEK5pJuzIWrMp1cx-5" value="we should render create profile button / edit button , add exp add edu and pritn the exp and edu details over the dashboard." style="whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="275" y="190" width="170" height="90" as="geometry"/>
                 </mxCell>
-                <mxCell id="0guqLEK5pJuzIWrMp1cx-7" value="req: 2" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="0guqLEK5pJuzIWrMp1cx-7" value="req: 2" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="275" y="140" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="0guqLEK5pJuzIWrMp1cx-8" value="check the user profile existance?&lt;div&gt;if exits then render or else render create prifle.&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                <mxCell id="0guqLEK5pJuzIWrMp1cx-8" value="check the user profile existance?&lt;div&gt;if exits then render or else render create prifle.&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
                     <mxGeometry x="100" y="180" width="130" height="110" as="geometry"/>
                 </mxCell>
-                <mxCell id="0guqLEK5pJuzIWrMp1cx-9" value="1. do it inside the component&lt;div&gt;2. do itinside the reducer.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="0guqLEK5pJuzIWrMp1cx-9" value="1. do it inside the component&lt;div&gt;2. do itinside the reducer.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-110" y="50" width="120" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="FpEx75vzLt1NiIeYUynC-3" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="FpEx75vzLt1NiIeYUynC-1" target="FpEx75vzLt1NiIeYUynC-2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="FpEx75vzLt1NiIeYUynC-1" value="create/ edit&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry y="370" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="FpEx75vzLt1NiIeYUynC-2" value="one form&amp;nbsp;" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                    <mxGeometry y="510" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="FpEx75vzLt1NiIeYUynC-4" value="create==&amp;gt; form&amp;nbsp; &amp;nbsp;must be blank and for edit ==&amp;gt; form must be filled with existing values." style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="70" y="450" width="210" height="50" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
