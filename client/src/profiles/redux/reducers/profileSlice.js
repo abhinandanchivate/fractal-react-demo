@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getCurrentProfileAciton } from "../action/profile.action";
+import {
+  createProfileAction,
+  getCurrentProfileAciton,
+} from "../action/profile.action";
 const initialState = {
   profile: null, // to hold current profile
   profiles: [], // to hold all profiles
@@ -12,6 +15,17 @@ const profileSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(createProfileAction.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createProfileAction.fulfilled, (state, action) => {
+        state.loading = false;
+        state.profile = action.payload.data;
+      })
+      .addCase(createProfileAction.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
       .addCase(getCurrentProfileAciton.pending, (state) => {
         state.loading = true;
       })

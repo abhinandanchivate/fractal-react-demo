@@ -10,8 +10,8 @@ export const loadUser = async () => {
     // response(failure): {error validational details}
     const response = await API.get("/auth");
     // below return is ur success response
-    console.log(response);
-    localStorage.setItem("token", response.data.token);
+    //console.log(response);
+    // localStorage.setItem("token", response.data.token);
     return { data: response.data, status: response.status };
   } catch (error) {}
 };

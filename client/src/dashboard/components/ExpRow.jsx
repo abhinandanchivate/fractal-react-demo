@@ -1,6 +1,8 @@
 import React from "react";
 
 const ExpRow = () => {
+  console.log("hello from abhi");
+
   return (
     <>
       <tr>
