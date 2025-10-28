@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System - CRUD Operations</title>
+    
+    <!-- Ant Design CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/antd@5.12.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/5.12.0/antd.min.css">
+    
+    <!-- Ant Design Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+            color: white;
+            padding: 24px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 24px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        /* Content Area */
+        .content {
+            padding: 24px 32px;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 12px;
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .ant-input {
+            height: 40px;
+            padding: 8px 12px;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .ant-input:focus {
+            outline: none;
+            border-color: #1890ff;
+            box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+        }
+
+        .ant-input-search {
+            position: relative;
+            flex: 1;
+        }
+
+        .ant-input-search i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .ant-input-search input {
+            padding-left: 36px;
+        }
+
+        .ant-select {
+            height: 40px;
+            min-width: 180px;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        .ant-select:hover {
+            border-color: #40a9ff;
+        }
+
+        /* Button Styles */
+        .ant-btn {
+            height: 40px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .ant-btn-primary {
+            background: #1890ff;
+            color: white;
+        }
+
+        .ant-btn-primary:hover {
+            background: #40a9ff;
+            box-shadow: 0 2px 8px rgba(24, 144, 255, 0.4);
+        }
+
+        .ant-btn-danger {
+            background: #ff4d4f;
+            color: white;
+        }
+
+        .ant-btn-danger:hover {
+            background: #ff7875;
+        }
+
+        .ant-btn-default {
+            background: white;
+            color: #333;
+            border: 1px solid #d9d9d9;
+        }
+
+        .ant-btn-default:hover {
+            color: #1890ff;
+            border-color: #1890ff;
+        }
+
+        .ant-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Table Styles */
+        .ant-table {
+            width: 100%;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #f0f0f0;
+        }
+
+        .ant-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .ant-table thead {
+            background: #fafafa;
+        }
+
+        .ant-table th {
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            color: rgba(0, 0, 0, 0.85);
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+        .ant-table th:hover {
+            background: #f5f5f5;
+            cursor: pointer;
+        }
+
+        .ant-table td {
+            padding: 16px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.65);
+        }
+
+        .ant-table tbody tr:hover {
+            background: #fafafa;
+        }
+
+        .ant-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .ant-tag {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: inline-block;
+            border: 1px solid;
+        }
+
+        .ant-tag-success {
+            background: #f6ffed;
+            border-color: #b7eb8f;
+            color: #52c41a;
+        }
+
+        .ant-tag-error {
+            background: #fff2f0;
+            border-color: #ffccc7;
+            color: #ff4d4f;
+        }
+
+        .ant-tag-warning {
+            background: #fffbe6;
+            border-color: #ffe58f;
+            color: #faad14;
+        }
+
+        .ant-tag-blue {
+            background: #e6f7ff;
+            border-color: #91d5ff;
+            color: #1890ff;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .ant-btn-sm {
+            height: 32px;
+            padding: 4px 12px;
+            font-size: 13px;
+        }
+
+        /* Modal Styles */
+        .ant-modal-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.45);
+            display: none;
+            z-index: 1000;
+        }
+
+        .ant-modal-mask.active {
+            display: block;
+        }
+
+        .ant-modal-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: auto;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+        }
+
+        .ant-modal-wrap.active {
+            display: flex;
+        }
+
+        .ant-modal {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow: auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .ant-modal-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .ant-modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: rgba(0, 0, 0, 0.85);
+        }
+
+        .ant-modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.45);
+            transition: color 0.3s;
+        }
+
+        .ant-modal-close:hover {
+            color: rgba(0, 0, 0, 0.85);
+        }
+
+        .ant-modal-body {
+            padding: 24px;
+        }
+
+        .ant-modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        /* Form Styles */
+        .ant-form-item {
+            margin-bottom: 24px;
+        }
+
+        .ant-form-item-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: rgba(0, 0, 0, 0.85);
+        }
+
+        .ant-form-item-label .required {
+            color: #ff4d4f;
+            margin-right: 4px;
+        }
+
+        .ant-form-item-control {
+            position: relative;
+        }
+
+        .ant-input-number {
+            width: 100%;
+            height: 40px;
+            padding: 8px 12px;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        textarea.ant-input {
+            min-height: 80px;
+            padding: 8px 12px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* Pagination */
+        .ant-pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            padding: 16px 0;
+        }
+
+        .ant-pagination-item {
+            min-width: 32px;
+            height: 32px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .ant-pagination-item:hover,
+        .ant-pagination-item.active {
+            border-color: #1890ff;
+            color: #1890ff;
+        }
+
+        .ant-pagination-item.active {
+            background: #1890ff;
+            color: white;
+        }
+
+        /* Message Notification */
+        .ant-message {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2000;
+            display: none;
+        }
+
+        .ant-message.active {
+            display: block;
+            animation: messageSlideIn 0.3s ease;
+        }
+
+        @keyframes messageSlideIn {
+            from {
+                transform: translate(-50%, -20px);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        .ant-message-notice {
+            padding: 10px 16px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+        }
+
+        .ant-message-success {
+            background: #f6ffed;
+            border: 1px solid #b7eb8f;
+            color: #52c41a;
+        }
+
+        .ant-message-error {
+            background: #fff2f0;
+            border: 1px solid #ffccc7;
+            color: #ff4d4f;
+        }
+
+        .ant-message-info {
+            background: #e6f7ff;
+            border: 1px solid #91d5ff;
+            color: #1890ff;
+        }
+
+        /* Loading Spinner */
+        .ant-spin {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #1890ff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .ant-empty {
+            text-align: center;
+            padding: 40px 0;
+            color: rgba(0, 0, 0, 0.25);
+        }
+
+        .ant-empty-image {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        /* Confirm Dialog */
+        .ant-popconfirm {
+            position: fixed;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 16px;
+            z-index: 1500;
+            display: none;
+            min-width: 280px;
+        }
+
+        .ant-popconfirm.active {
+            display: block;
+        }
+
+        .ant-popconfirm-message {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .ant-popconfirm-message-icon {
+            color: #faad14;
+            font-size: 18px;
+        }
+
+        .ant-popconfirm-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .ant-table {
+                overflow-x: auto;
+            }
+
+            .content {
+                padding: 16px;
+            }
+        }
+
+        /* Department Badge Colors */
+        .dept-engineering { background: #e6f7ff; color: #1890ff; }
+        .dept-marketing { background: #fff0f6; color: #eb2f96; }
+        .dept-sales { background: #f6ffed; color: #52c41a; }
+        .dept-hr { background: #fff7e6; color: #fa8c16; }
+        .dept-finance { background: #f9f0ff; color: #722ed1; }
+
+        /* Salary Display */
+        .salary-display {
+            font-weight: 600;
+            color: #52c41a;
+        }
+
+        /* Badge Styles */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Hover Effects */
+        .clickable {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .clickable:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Sort Icons */
+        .sort-icon {
+            display: inline-block;
+            margin-left: 4px;
+            font-size: 12px;
+            color: #bfbfbf;
+        }
+
+        .sort-icon.active {
+            color: #1890ff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Message Container -->
+    <div id="message" class="ant-message"></div>
+
+    <!-- Confirm Dialog -->
+    <div id="confirmDialog" class="ant-popconfirm"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>
+                <i class="fas fa-users"></i>
+                Employee Management System
+            </h1>
+            <div class="header-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalEmployees">0</div>
+                    <div class="stat-label">Total Employees</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="activeEmployees">0</div>
+                    <div class="stat-label">Active</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <div class="search-box">
+                    <div class="ant-input-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="ant-input" id="searchInput" placeholder="Search employees by name, email, department...">
+                    </div>
+                    <select class="ant-select" id="departmentFilter">
+                        <option value="">All Departments</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Sales">Sales</option>
+                        <option value="HR">HR</option>
+                        <option value="Finance">Finance</option>
+                    </select>
+                </div>
+                <button class="ant-btn ant-btn-primary" onclick="openModal()">
+                    <i class="fas fa-plus"></i>
+                    Add New Employee
+                </button>
+            </div>
+
+            <!-- Table -->
+            <div class="ant-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable('id')">
+                                ID
+                                <span class="sort-icon" id="sort-id">
+                                    <i class="fas fa-sort"></i>
+                                </span>
+                            </th>
+                            <th onclick="sortTable('firstName')">
+                                Name
+                                <span class="sort-icon" id="sort-firstName">
+                                    <i class="fas fa-sort"></i>
+                                </span>
+                            </th>
+                            <th>Email</th>
+                            <th onclick="sortTable('department')">
+                                Department
+                                <span class="sort-icon" id="sort-department">
+                                    <i class="fas fa-sort"></i>
+                                </span>
+                            </th>
+                            <th>Position</th>
+                            <th onclick="sortTable('salary')">
+                                Salary
+                                <span class="sort-icon" id="sort-salary">
+                                    <i class="fas fa-sort"></i>
+                                </span>
+                            </th>
+                            <th>Status</th>
+                            <th style="text-align: center;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employeeTableBody">
+                        <!-- Table rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="ant-pagination" id="pagination">
+                <!-- Pagination will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="ant-modal-mask" id="modalMask" onclick="closeModal()"></div>
+    <div class="ant-modal-wrap" id="modalWrap">
+        <div class="ant-modal" onclick="event.stopPropagation()">
+            <div class="ant-modal-header">
+                <div class="ant-modal-title" id="modalTitle">
+                    <i class="fas fa-plus-circle"></i>
+                    Add New Employee
+                </div>
+                <button class="ant-modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="ant-modal-body">
+                <form id="employeeForm">
+                    <input type="hidden" id="employeeId">
+                    
+                    <div class="form-row">
+                        <div class="ant-form-item">
+                            <label class="ant-form-item-label">
+                                <span class="required">*</span> First Name
+                            </label>
+                            <div class="ant-form-item-control">
+                                <input type="text" class="ant-input" id="firstName" required placeholder="Enter first name">
+                            </div>
+                        </div>
+                        
+                        <div class="ant-form-item">
+                            <label class="ant-form-item-label">
+                                <span class="required">*</span> Last Name
+                            </label>
+                            <div class="ant-form-item-control">
+                                <input type="text" class="ant-input" id="lastName" required placeholder="Enter last name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ant-form-item">
+                        <label class="ant-form-item-label">
+                            <span class="required">*</span> Email
+                        </label>
+                        <div class="ant-form-item-control">
+                            <input type="email" class="ant-input" id="email" required placeholder="employee@company.com">
+                        </div>
+                    </div>
+
+                    <div class="ant-form-item">
+                        <label class="ant-form-item-label">Phone</label>
+                        <div class="ant-form-item-control">
+                            <input type="tel" class="ant-input" id="phone" placeholder="+1-555-0100">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="ant-form-item">
+                            <label class="ant-form-item-label">
+                                <span class="required">*</span> Department
+                            </label>
+                            <div class="ant-form-item-control">
+                                <select class="ant-select" id="department" required>
+                                    <option value="">Select department</option>
+                                    <option value="Engineering">Engineering</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Sales">Sales</option>
+                                    <option value="HR">HR</option>
+                                    <option value="Finance">Finance</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="ant-form-item">
+                            <label class="ant-form-item-label">Position</label>
+                            <div class="ant-form-item-control">
+                                <input type="text" class="ant-input" id="position" placeholder="Job title">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="ant-form-item">
+                            <label class="ant-form-item-label">Salary</label>
+                            <div class="ant-form-item-control">
+                                <input type="number" class="ant-input-number" id="salary" placeholder="50000" min="0" step="1000">
+                            </div>
+                        </div>
+
+                        <div class="ant-form-item">
+                            <label class="ant-form-item-label">Join Date</label>
+                            <div class="ant-form-item-control">
+                                <input type="date" class="ant-input" id="joinDate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ant-form-item">
+                        <label class="ant-form-item-label">Status</label>
+                        <div class="ant-form-item-control">
+                            <select class="ant-select" id="status">
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                                <option value="On Leave">On Leave</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="ant-modal-footer">
+                <button class="ant-btn ant-btn-default" onclick="closeModal()">
+                    Cancel
+                </button>
+                <button class="ant-btn ant-btn-primary" onclick="saveEmployee()">
+                    <i class="fas fa-save"></i>
+                    <span id="saveButtonText">Save</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample Data
+        let employees = [
+            {
+                id: 1,
+                firstName: "John",
+                lastName: "Doe",
+                email: "john.doe@company.com",
+                phone: "+1-555-0100",
+                department: "Engineering",
+                position: "Senior Developer",
+                salary: 95000,
+                joinDate: "2022-01-15",
+                status: "Active"
+            },
+            {
+                id: 2,
+                firstName: "Jane",
+                lastName: "Smith",
+                email: "jane.smith@company.com",
+                phone: "+1-555-0101",
+                department: "Marketing",
+                position: "Marketing Manager",
+                salary: 85000,
+                joinDate: "2021-06-20",
+                status: "Active"
+            },
+            {
+                id: 3,
+                firstName: "Mike",
+                lastName: "Johnson",
+                email: "mike.j@company.com",
+                phone: "+1-555-0102",
+                department: "Sales",
+                position: "Sales Representative",
+                salary: 65000,
+                joinDate: "2023-03-10",
+                status: "Active"
+            },
+            {
+                id: 4,
+                firstName: "Sarah",
+                lastName: "Williams",
+                email: "sarah.w@company.com",
+                phone: "+1-555-0103",
+                department: "HR",
+                position: "HR Manager",
+                salary: 78000,
+                joinDate: "2021-09-05",
+                status: "Active"
+            },
+            {
+                id: 5,
+                firstName: "David",
+                lastName: "Brown",
+                email: "david.brown@company.com",
+                phone: "+1-555-0104",
+                department: "Finance",
+                position: "Financial Analyst",
+                salary: 72000,
+                joinDate: "2022-11-18",
+                status: "Active"
+            },
+            {
+                id: 6,
+                firstName: "Emily",
+                lastName: "Davis",
+                email: "emily.d@company.com",
+                phone: "+1-555-0105",
+                department: "Engineering",
+                position: "Frontend Developer",
+                salary: 82000,
+                joinDate: "2023-02-14",
+                status: "Active"
+            },
+            {
+                id: 7,
+                firstName: "Robert",
+                lastName: "Wilson",
+                email: "robert.w@company.com",
+                phone: "+1-555-0106",
+                department: "Sales",
+                position: "Sales Director",
+                salary: 105000,
+                joinDate: "2020-04-22",
+                status: "Active"
+            },
+            {
+                id: 8,
+                firstName: "Lisa",
+                lastName: "Anderson",
+                email: "lisa.a@company.com",
+                phone: "+1-555-0107",
+                department: "Marketing",
+                position: "Content Specialist",
+                salary: 58000,
+                joinDate: "2023-07-30",
+                status: "On Leave"
+            }
+        ];
+
+        let currentPage = 1;
+        let itemsPerPage = 5;
+        let filteredEmployees = [...employees];
+        let editingEmployeeId = null;
+        let sortColumn = null;
+        let sortDirection = 'asc';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTable();
+            updateStats();
+            setupEventListeners();
+        });
+
+        // Event Listeners
+        function setupEventListeners() {
+            document.getElementById('searchInput').addEventListener('input', filterEmployees);
+            document.getElementById('departmentFilter').addEventListener('change', filterEmployees);
+        }
+
+        // Render Table
+        function renderTable() {
+            const tbody = document.getElementById('employeeTableBody');
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const currentEmployees = filteredEmployees.slice(startIndex, endIndex);
+
+            if (currentEmployees.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8">
+                            <div class="ant-empty">
+                                <div class="ant-empty-image">
+                                    <i class="fas fa-inbox"></i>
+                                </div>
+                                <p>No employees found</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                document.getElementById('pagination').innerHTML = '';
+                return;
+            }
+
+            tbody.innerHTML = currentEmployees.map(emp => `
+                <tr>
+                    <td>${emp.id}</td>
+                    <td><strong>${emp.firstName} ${emp.lastName}</strong></td>
+                    <td>${emp.email}</td>
+                    <td>
+                        <span class="badge dept-${emp.department.toLowerCase()}">
+                            ${emp.department}
+                        </span>
+                    </td>
+                    <td>${emp.position}</td>
+                    <td class="salary-display">$${emp.salary.toLocaleString()}</td>
+                    <td>
+                        <span class="ant-tag ${getStatusClass(emp.status)}">
+                            ${emp.status}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="ant-btn ant-btn-default ant-btn-sm" onclick="editEmployee(${emp.id})">
+                                <i class="fas fa-edit"></i>
+                                Edit
+                            </button>
+                            <button class="ant-btn ant-btn-danger ant-btn-sm" onclick="confirmDelete(${emp.id})">
+                                <i class="fas fa-trash"></i>
+                                Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+
+            renderPagination();
+        }
+
+        // Get Status Class
+        function getStatusClass(status) {
+            switch(status) {
+                case 'Active': return 'ant-tag-success';
+                case 'Inactive': return 'ant-tag-error';
+                case 'On Leave': return 'ant-tag-warning';
+                default: return 'ant-tag-blue';
+            }
+        }
+
+        // Pagination
+        function renderPagination() {
+            const totalPages = Math.ceil(filteredEmployees.length / itemsPerPage);
+            const pagination = document.getElementById('pagination');
+            
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+            
+            // Previous button
+            html += `
+                <button class="ant-btn ant-btn-default ant-btn-sm" 
+                        onclick="changePage(${currentPage - 1})" 
+                        ${currentPage === 1 ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            `;
+
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                    html += `
+                        <div class="ant-pagination-item ${i === currentPage ? 'active' : ''}" 
+                             onclick="changePage(${i})">
+                            ${i}
+                        </div>
+                    `;
+                } else if (i === currentPage - 2 || i === currentPage + 2) {
+                    html += '<span style="padding: 0 8px;">...</span>';
+                }
+            }
+
+            // Next button
+            html += `
+                <button class="ant-btn ant-btn-default ant-btn-sm" 
+                        onclick="changePage(${currentPage + 1})" 
+                        ${currentPage === totalPages ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            `;
+
+            pagination.innerHTML = html;
+        }
+
+        function changePage(page) {
+            const totalPages = Math.ceil(filteredEmployees.length / itemsPerPage);
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                renderTable();
+            }
+        }
+
+        // Filter Employees
+        function filterEmployees() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const departmentFilter = document.getElementById('departmentFilter').value;
+
+            filteredEmployees = employees.filter(emp => {
+                const matchesSearch = !searchTerm || 
+                    emp.firstName.toLowerCase().includes(searchTerm) ||
+                    emp.lastName.toLowerCase().includes(searchTerm) ||
+                    emp.email.toLowerCase().includes(searchTerm) ||
+                    emp.department.toLowerCase().includes(searchTerm) ||
+                    emp.position.toLowerCase().includes(searchTerm);
+
+                const matchesDepartment = !departmentFilter || emp.department === departmentFilter;
+
+                return matchesSearch && matchesDepartment;
+            });
+
+            currentPage = 1;
+            renderTable();
+        }
+
+        // Sort Table
+        function sortTable(column) {
+            // Reset all sort icons
+            document.querySelectorAll('.sort-icon').forEach(icon => {
+                icon.innerHTML = '<i class="fas fa-sort"></i>';
+                icon.classList.remove('active');
+            });
+
+            if (sortColumn === column) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortColumn = column;
+                sortDirection = 'asc';
+            }
+
+            const sortIcon = document.getElementById(`sort-${column}`);
+            sortIcon.classList.add('active');
+            sortIcon.innerHTML = sortDirection === 'asc' 
+                ? '<i class="fas fa-sort-up"></i>' 
+                : '<i class="fas fa-sort-down"></i>';
+
+            filteredEmployees.sort((a, b) => {
+                let aVal = a[column];
+                let bVal = b[column];
+
+                if (typeof aVal === 'string') {
+                    aVal = aVal.toLowerCase();
+                    bVal = bVal.toLowerCase();
+                }
+
+                if (sortDirection === 'asc') {
+                    return aVal > bVal ? 1 : -1;
+                } else {
+                    return aVal < bVal ? 1 : -1;
+                }
+            });
+
+            renderTable();
+        }
+
+        // Modal Functions
+        function openModal(employee = null) {
+            editingEmployeeId = employee ? employee.id : null;
+            
+            if (employee) {
+                // Edit mode
+                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Employee';
+                document.getElementById('saveButtonText').textContent = 'Update';
+                document.getElementById('employeeId').value = employee.id;
+                document.getElementById('firstName').value = employee.firstName;
+                document.getElementById('lastName').value = employee.lastName;
+                document.getElementById('email').value = employee.email;
+                document.getElementById('phone').value = employee.phone;
+                document.getElementById('department').value = employee.department;
+                document.getElementById('position').value = employee.position;
+                document.getElementById('salary').value = employee.salary;
+                document.getElementById('joinDate').value = employee.joinDate;
+                document.getElementById('status').value = employee.status;
+            } else {
+                // Create mode
+                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Add New Employee';
+                document.getElementById('saveButtonText').textContent = 'Create';
+                document.getElementById('employeeForm').reset();
+                document.getElementById('status').value = 'Active';
+            }
+
+            document.getElementById('modalMask').classList.add('active');
+            document.getElementById('modalWrap').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modalMask').classList.remove('active');
+            document.getElementById('modalWrap').classList.remove('active');
+            document.getElementById('employeeForm').reset();
+            editingEmployeeId = null;
+        }
+
+        // Save Employee (CREATE or UPDATE)
+        function saveEmployee() {
+            const form = document.getElementById('employeeForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const employeeData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                department: document.getElementById('department').value,
+                position: document.getElementById('position').value,
+                salary: parseInt(document.getElementById('salary').value) || 0,
+                joinDate: document.getElementById('joinDate').value,
+                status: document.getElementById('status').value
+            };
+
+            if (editingEmployeeId) {
+                // UPDATE
+                const index = employees.findIndex(emp => emp.id === editingEmployeeId);
+                employees[index] = { ...employees[index], ...employeeData };
+                showMessage('success', 'Employee updated successfully!');
+            } else {
+                // CREATE
+                const newEmployee = {
+                    id: Math.max(...employees.map(e => e.id)) + 1,
+                    ...employeeData
+                };
+                employees.push(newEmployee);
+                showMessage('success', 'Employee added successfully!');
+            }
+
+            closeModal();
+            filterEmployees();
+            updateStats();
+        }
+
+        // Edit Employee
+        function editEmployee(id) {
+            const employee = employees.find(emp => emp.id === id);
+            openModal(employee);
+        }
+
+        // Confirm Delete
+        function confirmDelete(id) {
+            const employee = employees.find(emp => emp.id === id);
+            const confirmHtml = `
+                <div class="ant-popconfirm-message">
+                    <i class="fas fa-exclamation-circle ant-popconfirm-message-icon"></i>
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 4px;">Delete Employee</div>
+                        <div>Are you sure you want to delete ${employee.firstName} ${employee.lastName}?</div>
+                    </div>
+                </div>
+                <div class="ant-popconfirm-buttons">
+                    <button class="ant-btn ant-btn-default ant-btn-sm" onclick="closeConfirm()">Cancel</button>
+                    <button class="ant-btn ant-btn-danger ant-btn-sm" onclick="deleteEmployee(${id})">Delete</button>
+                </div>
+            `;
+            
+            const dialog = document.getElementById('confirmDialog');
+            dialog.innerHTML = confirmHtml;
+            dialog.classList.add('active');
+            
+            // Position the dialog
+            const rect = event.target.getBoundingClientRect();
+            dialog.style.top = rect.bottom + 10 + 'px';
+            dialog.style.left = rect.left - 100 + 'px';
+        }
+
+        function closeConfirm() {
+            document.getElementById('confirmDialog').classList.remove('active');
+        }
+
+        // Delete Employee
+        function deleteEmployee(id) {
+            employees = employees.filter(emp => emp.id !== id);
+            closeConfirm();
+            showMessage('success', 'Employee deleted successfully!');
+            filterEmployees();
+            updateStats();
+        }
+
+        // Show Message
+        function showMessage(type, text) {
+            const message = document.getElementById('message');
+            const iconMap = {
+                success: 'fa-check-circle',
+                error: 'fa-times-circle',
+                info: 'fa-info-circle'
+            };
+
+            message.innerHTML = `
+                <div class="ant-message-notice ant-message-${type}">
+                    <i class="fas ${iconMap[type]}"></i>
+                    <span>${text}</span>
+                </div>
+            `;
+            message.classList.add('active');
+
+            setTimeout(() => {
+                message.classList.remove('active');
+            }, 3000);
+        }
+
+        // Update Stats
+        function updateStats() {
+            document.getElementById('totalEmployees').textContent = employees.length;
+            document.getElementById('activeEmployees').textContent = 
+                employees.filter(emp => emp.status === 'Active').length;
+        }
+    </script>
+</body>
+</html>
